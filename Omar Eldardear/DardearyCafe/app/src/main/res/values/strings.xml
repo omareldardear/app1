@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Dardeary Restaurant</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Clear My Order</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="title_activity_second_menu">SecondMenu</string>
+    <string name="title_activity_my_order">MyOrder</string>
+</resources>
