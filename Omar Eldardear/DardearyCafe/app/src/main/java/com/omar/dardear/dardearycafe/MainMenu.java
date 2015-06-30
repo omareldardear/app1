@@ -118,22 +118,28 @@ public class MainMenu extends ActionBarActivity {
                 {
                     GPSTracker mGPS = new GPSTracker(MainMenu.this);
                     if(mGPS.canGetLocation() ){
-                        mGPS.getLocation();
-                        String message="";
-                        for (int c=0;c<pref.getInt("Size",0);c++)
+                        mGPS.location=mGPS.getLocation();
+                        if(mGPS.getLatitude()==0.0)
                         {
-                            message=message+pref.getString("Dish"+c,"f")+"\n";
+                            Toast.makeText(MainMenu.this, "GPS just Opend please wait few seconds and try again", Toast.LENGTH_SHORT).show();
                         }
-                        message=message + "\n"+"Location:: "+"\n"+"Lat: "+mGPS.getLatitude()+"\n"+"Lon: "+mGPS.getLongitude();
-                        Intent i = new Intent(Intent.ACTION_SEND);
-                        i.setType("message/rfc822");
-                        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"dardearynote@gmail.com"});
-                        i.putExtra(Intent.EXTRA_SUBJECT, "Order");
-                        i.putExtra(Intent.EXTRA_TEXT   , message);
-                        try {
-                            startActivity(Intent.createChooser(i, "Send mail..."));
-                        } catch (android.content.ActivityNotFoundException ex) {
-                            Toast.makeText(MainMenu.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        else {
+
+                            String message = "";
+                            for (int c = 0; c < pref.getInt("Size", 0); c++) {
+                                message = message + pref.getString("Dish" + c, "f") + "\n";
+                            }
+                            message = message + "\n" + "Location:: " + "\n" + "Lat: " + mGPS.getLatitude() + "\n" + "Lon: " + mGPS.getLongitude();
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("message/rfc822");
+                            i.putExtra(Intent.EXTRA_EMAIL, new String[]{"dardearynote@gmail.com"});
+                            i.putExtra(Intent.EXTRA_SUBJECT, "Order");
+                            i.putExtra(Intent.EXTRA_TEXT, message);
+                            try {
+                                startActivity(Intent.createChooser(i, "Send mail..."));
+                            } catch (android.content.ActivityNotFoundException ex) {
+                                Toast.makeText(MainMenu.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }else{
                         Toast.makeText(MainMenu.this, "Unable to Find Your Location Please Open GPS", Toast.LENGTH_SHORT).show();
